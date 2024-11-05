@@ -3,9 +3,9 @@ function adicionarItem() {
     const nomeEpi = document.getElementById("nomeEpi").value.trim();
     const ca = document.getElementById("numberCa").value.trim();
     const quantidade = document.getElementById("quantidadeItem").value;
-    const tipoEpi = document.getElementById("tipoEpi").value;
+    const tipoEpi = document.getElementById("tipoItem").value;
 
-    if (nomeEpi == "" && ca == "" && quantidade == "" && tipoEpi == "") {
+    if (nomeEpi == "" || ca == "" || quantidade == "" || tipoEpi == "") {
         alert("Por favor, preencha todos os campos.");
         return;
     }
@@ -26,7 +26,7 @@ function adicionarItem() {
     document.getElementById("nomeItem").value = "";
     document.getElementById("numeroCa").value = "";
     document.getElementById("quantidadeItem").value = "";
-    document.getElementById("categoriaItem").value = "";
+    document.getElementById("tipoItem").value = "";
 }
 
 function excluirLinha(botao) {
