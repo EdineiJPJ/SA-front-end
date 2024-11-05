@@ -52,9 +52,9 @@
           Item
         </a>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="../Item/item.html">Cadastro de Itens</a></li>
-          <li><a class="dropdown-item" href="../Item/listaItem.html">Lista de Itens</a></li>
-          <li><a class="dropdown-item" href="../TipoItem/tipo-item.html">Cadastro de tipos de Itens</a></li>
+          <li><a class="dropdown-item" href="../Item/item.html">Cadastrar Itens</a></li>
+          <li><a class="dropdown-item" href="../Item/listaItem.html">Tabela de Itens</a></li>
+          <li><a class="dropdown-item" href="../TipoItem/tipo-item.html">Cadastrar Tipos de Itens</a></li>
         </ul>
       </li>
 
@@ -79,24 +79,26 @@
           <label class="mb-2">Quantidade</label>
           <input type="text" class="form-control" id="novoItem" placeholder="00">
         </div>
+
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label>Tipo de EPI</label>
+            <select name="" id="novoItem" class="form-control">
+              <option value="">Luvas</option>
+              <option value="">Botas</option>
+              <option value="">Capacete</option>
+              <option value="">Óculos</option>
+            </select>
+          </div>
+        </div>
         <div class="col-md-2">
           <label class="mb-2">Validade</label>
           <input type="text" class="form-control" id="novoItem" placeholder="00/00/0000">
-        </div>
-
+        </div> 
       </div>
-
-      <div class="row mt-3 col-md-4">
-        <div class="mb-3">
-          <label>Tipo de EPI</label>
-          <select name="" id="novoItem" class="form-control">
-            <option value="">Luvas</option>
-            <option value="">Botas</option>
-            <option value="">Capacete</option>
-            <option value="">Óculos</option>
-          </select>
-        </div>
-      </div>
+      
 
       <div class="mt-3 botoes">
         <button type="submit" class="btn btn-success" onclick="adicionarItem()">Salvar</button>
