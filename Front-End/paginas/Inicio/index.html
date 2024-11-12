@@ -53,60 +53,69 @@
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-Light bg-Light barra">
-    <a class="navbar-brand" href="#"><img class="logo-tamanho" src="../Pessoas/img/teste.PNG" alt=""></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Alterna navegação">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="../Inicio/index.html">Inicio</a>
-
-        </li>
+  <nav class="navbar navbar-expand-lg bg-Light barra">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img class="logo-tamanho" src="../Pessoas/img/teste.PNG" alt=""></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="../Inicio/index.html">Inicio</a>
+  
+          </li>
+         
        
-     
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Pessoa
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="../Pessoas/cadastrarPessoas.html">Cadastrar pessoa</a></li>
+              <li><a class="dropdown-item" href="../Pessoas/tabelaPessoas.html">Tabela de pessoas</a></li>
+            </ul>
+          </li>
+  
+          </li>
+          <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Emprestimo
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="../Emprestimo/cadastro_emprestimo.html">Cadastrar emprestimo</a></li>
+          <li><a class="dropdown-item" href="../Emprestimo/tabela2.html">Tabela emprestimo</a></li>
+        </ul>
+      </li>   
+  
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Pessoa
+          <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Item
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="../Pessoas/cadastrarPessoas.html">Cadastrar pessoa</a></li>
-            <li><a class="dropdown-item" href="../Pessoas/tabelaPessoas.html">Tabela de pessoas</a></li>
+            <li><a class="dropdown-item" href="../Item/item.html">Cadastrar Itens</a></li>
+            <li><a class="dropdown-item" href="../Item/listaItem.html">Tabela de Itens</a></li>
+            <li><a class="dropdown-item" href="../TipoItem/tipo-item.html">Cadastrar Tipos de Itens</a></li>
           </ul>
         </li>
 
-        </li>
         <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Emprestimo
-      </a>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="../Emprestimo/cadastro_emprestimo.html">Cadastrar</a></li>
-        <li><a class="dropdown-item" href="../Emprestimo/tabela2.html">Tabela </a></li>
-      </ul>
-    </li>
-
-   
-
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Item
-        </a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="../Item/item.html">Cadastrar Itens</a></li>
-          <li><a class="dropdown-item" href="../Item/listaItem.html">Tabela de Itens</a></li>
-          <li><a class="dropdown-item" href="../TipoItem/tipo-item.html">Cadastrar Tipos de Itens</a></li>
+          <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Usuário
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="../Usuario/usuario.html">Cadastrar usuario</a></li>
+           
+          </ul>
+        </li>
+  
+  
         </ul>
-      </li>
-
-
-      </ul>
+      </div>
     </div>
   </nav>
 
-  <h1>Bem viado a BEG</h1>
+  <h1>Bem vindo a BEG</h1>
   <div class="box">
     <div class="foto-teste">
       <img class="img-tamanho" src="img/emprestimo.png">
