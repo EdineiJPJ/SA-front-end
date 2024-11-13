@@ -84,52 +84,92 @@
       <table class="table table-hover">
         <thead class="table-success">
           <tr>
+            <th>ID</th>
             <th>Nome</th>
             <th>CPF</th>
-            <th>E-mail</th>
-            <th>Adiministrador</th>
-            <th>Ação</th>
+            <th>Ações</th>
           </tr>
         </thead>
-  
-        <tbody>
-          <tr>
-            <td>Bruno Maquilare</td>
-            <td>150.666.789-69</td>
-            <td>???????</td>
-            <td></td>
-            <td class="text-center" style="width: 200px;">
-              
-              <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                <i class="bi bi-trash-fill"></i>
-                Excluir
-              </button>
-              <button class="btn btn-primary">
-                <i class="bi bi-pencil-square"></i>
-                Editar
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Guinheme Bisoro</td>
-            <td>900.666.778-69</td>
-            <td>???????</td>
-            <td>Admin</td>
-            <td class="text-center" style="width: 200px;">
-              <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                <i class="bi bi-trash-fill"></i>
-                Excluir
-              </button>
-              <button class="btn btn-primary">
-                <i class="bi bi-pencil-square"></i>
-                Editar
-              </button>
-            </td>
-          </tr>
-        </tbody>
+        <tbody id="pessoasGrid"></tbody>
       </table>
-      </div>
+      <a href="cadastrarPessoas.html" class="btn btn-success mb-3">Adicionar Pessoa</a>
     </div>
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Confirmação de Exclusão</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" id="modalBodyTexto">
+                  Tem certeza que deseja excluir este funcionário?
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-danger" onclick="excluirpessoa()">Excluir</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+      let pessoaIdParaExcluir = null;
+      let nomePessoaParaExcluir = '';
+
+      // Função para carregar funcionários
+      async function carregarpessoas() {
+          const response = await fetch('https://cefb9c9b-1c49-4c67-9064-bd6b7509fdf7.mock.pstmn.io/pessoas');
+          const pessoas = await response.json();
+          const pessoasGrid = document.getElementById('pessoasGrid');
+          pessoasGrid.innerHTML = '';
+
+          pessoas.forEach(pessoa => {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                  <td>${pessoa.id}</td>
+                  <td>${pessoa.nome}</td>
+                  <td>${pessoa.cpf}</td>
+                  <td>
+                      <a href="cadastrarPessoas.html?id=${pessoa.id}" class="btn btn-warning btn-sm">Editar</a>
+                      <button class="btn btn-danger btn-sm" onclick="confirmarExclusao(${pessoa.id}, '${pessoa.nome}')">Excluir</button>
+                  </td>
+              `;
+              pessoasGrid.appendChild(row);
+          });
+      }
+
+      // Função para confirmar exclusão e abrir o modal
+      function confirmarExclusao(id, nome) {
+          pessoaIdParaExcluir = id;
+          nomePessoaParaExcluir = nome;
+
+          // Atualiza o texto do modal com o nome do funcionário
+          document.getElementById('modalBodyTexto').innerHTML = `Tem certeza que deseja excluir o funcionário <b>  ${nome}</b>?`;
+
+          // Abre o modal
+          new bootstrap.Modal('#staticBackdrop').show();
+      }
+
+      // Função para excluir funcionário
+      async function excluirpessoa() {
+          if (pessoaIdParaExcluir !== null) {
+              const response = await fetch(`http://localhost:3000/api/pessoas/${pessoaIdParaExcluir}`, { method: 'DELETE' });
+              if (response.ok) {
+                  alert('Pessoa excluída com sucesso!');
+                  carregarpessoas();
+              }
+              pessoaIdParaExcluir = null; // Resetando o ID após a exclusão
+              new bootstrap.Modal(document.getElementById('staticBackdrop')).hide(); // Fechando o modal após a exclusão
+          }
+      }
+
+      // Carregar funcionários ao iniciar
+      carregarpessoas();
+  </script>
 
 </body>
 
