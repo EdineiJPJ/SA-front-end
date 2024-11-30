@@ -103,7 +103,7 @@
     <script>
       async function carregarProfissoes() {
           try {
-              const response = await fetch('https://cefb9c9b-1c49-4c67-9064-bd6b7509fdf7.mock.pstmn.io/profissao');
+              const response = await fetch('https://localhost:3004/profissao');
               const profissoes = await response.json();
 
               const selectProfissao = document.getElementById('profissao');
