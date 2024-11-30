@@ -105,69 +105,62 @@
 
         <h2>Cadastro de Emprestimo</h2>
         <form action="">
-            <!--linha 1-->
+           
             <div class="row">
                 <div class="col-md-6">
                     <label class="form-label"> Item </label>
-                    <input type="text" class="form-control " placeholder="digite o nome Item">
+                    <input type="text" class="form-control " id="item" placeholder="digite o nome Item">
                 </div>
                 <div class="col-md-6">
                     <label class="form-label"> Nivel Acesso</label>
-                   <select name="nivel de aceso" id="nivel de aceso" class="form-control" required>
+                   <select name="nivel de aceso" id="nivel_de_acesso" class="form-control" required>
                     <option value="">Selecione..</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
                     
                 </select>
                 </div>
             </div>
-            <!--linha 2-->
+            
             <div class="row">
                 <div class="col-md-6">
                     <label class="form-label">  Data de Emprestimo</label>
-                    <input type="date" class="form-control " >
+                    <input type="date" class="form-control " id="data_emprestimo" >
                 </div>
 
                 <div class="col-md-6">
                     <label class="form-label"> Data de devolução</label>
-                    <input type="date" class="form-control " >
+                    <input type="date" class="form-control " id="data_devolucao" >
                 </div>
 
             </div>
-               <!--linha 3-->
+               
                <div class="row">
                 <div class="col-md-6">
                     <label class="form-label"> Usuario</label>
-                    <input type="text" class="form-control " placeholder="digite o nome do usuario">
+                    <input type="text" class="form-control " placeholder="digite o nome do usuario" id="usuario">
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Pessoa</label>
-                    <select name="tipo" id="tipo" class="form-control" required>
+                    <select name="tipo" id="pessoa" class="form-control" required>
                         <option value="">Selecione ...</option>
                     </select>
                 </div>
             </div>
 
-            <!--linha 4-->
             <div class="row">
                 <div class="col-md-6">
                     <label class="form-label"> Descrição </label>
-                    <textarea type="text" class="form-control " placeholder="digite Descrição"></textarea>
+                    <textarea type="text" class="form-control " placeholder="digite Descrição" id="descricao"></textarea>
                 </div>
 
                 <div class="col-md-6">
                     <label class="form-label">Tipo</label>
-                    <select name="tipo" id="tipo" class="form-control" required>
+                    <select name="tipo" id="tipo" class="form-control"  required>
                         <option value="">Selecione ...</option>
                         
                     </select>
                 </div>
 
             </div>
-          
-
-
 
             <div class="botoes mt-3">
                 <button type="submit" class="btn btn-success">Salvar</button>
@@ -175,9 +168,94 @@
                 <button type="button" class="btn btn-danger">Cancelar</button>
             </div>
         </form>
-
-
     </div>
+
+    <script>
+
+const urlBase = 'https://localhost:3004/emprestimos'
+
+    async function carregarEmprestimos() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+
+      if (id) {
+        document.getElementById('titulo').innerText = 'Editar Emprestimos';
+
+        const response = await fetch(`https://localhost:3004/emprestimos/?id=${id}`);
+        const emprestimo = await response.json();
+
+        document.getElementById('item').value = emprestimo.item;
+        document.getElementById('nivel_de_acesso').value = emprestimo.nivel_de_acesso;
+        document.getElementById('data_emprestimo').value = emprestimo.data_emprestimo;
+        document.getElementById('data_devolucao').value = emprestimo.data_devolucao; 
+        document.getElementById('usuario').value = emprestimo.usuario;
+        document.getElementById('pessoa').value = emprestimo.pessoa;
+        document.getElementById('descricao').value = emprestimo.descricao;
+        document.getElementById('tipo').value = emprestimo.tipo;
+      }
+    }
+
+    async function salvarItem() {
+      const item = document.getElementById('item').value;
+      const nivel_de_acesso = document.getElementById('nivel_de_acesso').value
+      const data_emprestimo = document.getElementById('data_emprestimo').value
+      const data_devolucao = document.getElementById('data_devolucao').value
+      const usuario = document.getElementById('usuario').value
+      const pessoa = document.getElementById('pessoa').value
+      const descricao = document.getElementById('descricao').value
+      const tipo = document.getElementById('tipo').value
+      
+      
+      
+      const emprestimoData = {        
+        item: item,
+        nivel_de_acesso: nivel_de_acesso,
+        data_emprestimo: data_emprestimo,
+        data_devolucao: data_devolucao,
+        usuario: usuario,
+        pessoa: pessoa,
+        descricao: descricao,
+        tipo: tipo,
+        id: id
+      };
+
+      try {
+        let response;
+
+        if (id) {
+        
+          response = await fetch(urlBase, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(emprestimoData),
+          });
+        } else {
+          
+          response = await fetch(urlBase, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(emprestimoData),
+          });
+        }
+
+        if (response.ok) {
+          alert('Emprestimo salvo com sucesso!');
+          window.location.href = 'listaItem.html'; 
+        } else {
+          alert('Erro ao salvar o emprestimo');
+        }
+      } catch (error) {
+        console.error('Erro ao salvar o emprestimo:', error);
+      }
+    }
+
+    carregarEmprestimos();
+
+    </script>
 </body>
 
 </html>

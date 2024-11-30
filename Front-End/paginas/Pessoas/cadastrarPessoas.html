@@ -100,64 +100,70 @@
 
     </div>
 
-    <script>
-      async function carregarProfissoes() {
-          try {
-              const response = await fetch('https://localhost:3004/profissao');
-              const profissoes = await response.json();
-
-              const selectProfissao = document.getElementById('profissao');
-
-              profissoes.forEach(profissao => {
-                  const option = document.createElement('option');
-                  option.value = profissao.id;
-                  option.textContent = profissao.nome;
-                  selectProfissao.appendChild(option);
-              });
-          } catch (error) {
-              console.error('Erro ao carregar profissões:', error);
-          }
+    <script> 
+    
+    const urlBase = 'https://localhost:3004/pessoas'
+  
+      async function carregarPessoas() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        if (id) {
+          document.getElementById('titulo').innerText = 'Editar Pessoa';
+  
+          const response = await fetch(`https://localhost:3004/pessoas/?id=${id}`);
+          const pessoa = await response.json();
+  
+          document.getElementById('nome').value = pessoa.nome;
+          document.getElementById('cpf').value = pessoa.cpf;
+        }
       }
-
-      async function carregarpessoa() {
-          const params = new URLSearchParams(window.location.search);
-          const id = params.get('id');
-
-          await carregarProfissoes(); 
-
-          if (id) {
-              document.getElementById('titulo').innerText = 'Editar Pessoa';
-
-              const response = await fetch(`https://cefb9c9b-1c49-4c67-9064-bd6b7509fdf7.mock.pstmn.io/pessoas/?id=${id}`);
-              const pessoa = await response.json();
-
-              document.getElementById('id').value = pessoa.id;
-              document.getElementById('nome').value = pessoa.nome;
-              document.getElementById('cpf').value = pessoa.cpf;
-          }
-      }
-
+  
       async function salvarPessoa() {
-          const id = document.getElementById('id').value;
-          const nome = document.getElementById('nome').value;
-          const cpf = document.getElementById('cpf').value;
-
-          const response = await fetch('http://localhost:3000/api/pessoas', {
+        const nome = document.getElementById('nome').value;
+        const cpf = document.getElementById('cpf').value;
+        
+        
+        const PessoaData = {        
+          nome: nome,
+          cpf: cpf,
+          id: id
+        };
+  
+        try {
+          let response;
+  
+          if (id) {
+          
+            response = await fetch(urlBase, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(PessoaData),
+            });
+          } else {
+            
+            response = await fetch(urlBase, {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                  id: id ? parseInt(id) : undefined,
-                  nome, cpf
-              })
-          });
-
-          if (response.ok) {
-              alert('Pessoa salva com sucesso!');
-              window.location.href = 'listagem.html';
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(PessoaData),
+            });
           }
+  
+          if (response.ok) {
+            alert('Pessoa salva com sucesso!');
+            window.location.href = 'tabelaPessoa.html'; 
+          } else {
+            alert('Erro ao salvar pessoa');
+          }
+        } catch (error) {
+          console.error('Erro ao salvar pessoa', error);
+        }
       }
-
-      carregarpessoa();
+  
+      carregarPessoas();  
   </script>
 
 </body>

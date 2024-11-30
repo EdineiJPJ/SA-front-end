@@ -158,28 +158,19 @@
             const tabelaItens = document.getElementById('tabelaEmprestimos');
             tabelaItens.innerHTML = '';
 
-            itens.forEach(item => {
+            itens.forEach(emprestimo => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${item.nome}</td>
-                    <td>${item.quantidade}</td>
-                    <td>${item.numeroCA}</td>
-                    <td>${item.tipoItem}</td>
-                    <td>${item.validade}</td>
-                    <td class="text-center" style="width: 200px;">
-            <button class="btn btn-danger bi bi-trash-fill" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="excluirItem(${item.nome}, '${item.numeroCA}')">Excluir</button>
-            <a href="item.html?id=${item.nome}" class="btn btn-primary bi bi-pencil-square">Editar</a>
-                    </td>
 
                      <td>${emprestimo.nome}</td>
-                    <td>Vestiário</td>
-                    <td>12/10/2024</td>
-                    <td>12/03/2025</td>
-                    <td>user@gmail.com</td>
-                    <td>person</td>
+                    <td>${emprestimo.tipoItem}</td>
+                    <td>${emprestimo.data_emprestimo}</td>
+                    <td>${emprestimo.data_devolucao}</td>
+                    <td>${emprestimo.usuario}</td>
+                    <td>${emprestimo.pessoa}</td>
                     <td class="text-center" style="width: 200px;">
                         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            <i class="bi bi-trash-fill"></i>Excluir</button>
+                            <i class="bi bi-trash-fill" onclick = "excluirEmprestimo(${emprestimo.id})"></i>Excluir</button>
                         <button class="btn btn-primary"><i class="bi bi-pencil-square"></i>Editar</button>
                     </td>
 
@@ -188,33 +179,29 @@
             });
         }
 
-        // Função para confirmar exclusão e abrir o modal
-        function excluirItem(numeroCA, nome) {
-            itemCaParaExcluir = numeroCA;
-            itemNomeParaExcluir = nome;
+    
+        async function excluirEmprestimo(id) {
+    
+    if (confirm('deseja excluir este emprestimo.')) {
+        try {
+            const response = await fetch(`http://localhost:4000/emprestimos/${id}`, {
+                method: 'DELETE',
+            });
 
-            // Atualiza o texto do modal com o nome do funcionário
-            document.getElementById('modalBodyTexto').innerHTML = `Tem certeza que deseja excluir o funcionário <b>  ${nome}</b>?`;
-
-            // Abre o modal
-            new bootstrap.Modal('#staticBackdrop').show();
-        }
-
-        // Função para excluir funcionário
-        async function excluirItem() {
-            if (itemIdParaExcluir !== null) {
-                const response = await fetch(`http://localhost:3000/api/itens/${itemIdParaExcluir}`, { method: 'DELETE' });
-                if (response.ok) {
-                    alert('Pessoa excluída com sucesso!');
-                    carregarItens();
-                }
-                itemCaParaExcluir = null; // Resetando o ID após a exclusão
-                new bootstrap.Modal(document.getElementById('staticBackdrop')).hide(); // Fechando o modal após a exclusão
+            if (response.ok) {
+                alert('emprestimos excluido com sucesso');
+                carregarFuncionarios();
+            } else {
+                alert('erro ao excluir.');
             }
+        } catch (error) {
+            console.error('erro ao excluir', error);
         }
+    }
+}
 
-        // Carregar funcionários ao iniciar
-        carregarItens();
+
+        carregarEmprestimos();
     </script>
 </body>
 
